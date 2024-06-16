@@ -19,7 +19,7 @@ public class NumberGame {
             System.out.println("Round " + i + " starts ...\n");
 
             System.out.println(
-                    "Please Enter the Difficulty Level:\n Easy [No Limit for number of attempts]\n2 --> Hard [There is Limit for number of attempts]");
+                    "Please Enter the Difficulty Level:\n1 --> Easy [No Limit for number of attempts]\n2 --> Hard [There is Limit for number of attempts]");
             int limits = obj.nextInt();
 
             switch (limits) {
