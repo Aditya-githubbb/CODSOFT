@@ -83,7 +83,7 @@ public class NumberGame {
                     break;
                 }
                 default: {
-                    System.out.println(" WRONG INPUT \n Sorry!!! But this round has been wasted.");
+                    System.out.println(" WRONG INPUT \n Sorry");
                     break;
                 }
             }
