@@ -1,0 +1,117 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+import java.util.Timer;
+import java.util.TimerTask;
+
+class QuizQuestion {
+    private String question;
+    private List<String> options;
+    private int correctAnswerIndex;
+
+    public QuizQuestion(String question, List<String> options, int correctAnswerIndex) {
+        this.question = question;
+        this.options = options;
+        this.correctAnswerIndex = correctAnswerIndex;
+    }
+
+    public String getQuestion() {
+        return question;
+    }
+
+    public List<String> getOptions() {
+        return options;
+    }
+
+    public int getCorrectAnswerIndex() {
+        return correctAnswerIndex;
+    }
+}
+
+public class Quiz {
+    private List<QuizQuestion> questions;
+    private int score;
+    private int currentQuestionIndex;
+
+    public Quiz() {
+        this.questions = new ArrayList<>();
+        this.score = 0;
+        this.currentQuestionIndex = 0;
+    }
+
+    public void addQuestion(QuizQuestion question) {
+        questions.add(question);
+    }
+
+    public void startQuiz() {
+        for (QuizQuestion question : questions) {
+            displayQuestion(question);
+            int userAnswer = getUserAnswer();
+            if (userAnswer == question.getCorrectAnswerIndex()) {
+                score++;
+            }
+        }
+        displayResult();
+    }
+
+    private void displayQuestion(QuizQuestion question) {
+        System.out.println("Question: " + question.getQuestion());
+        List<String> options = question.getOptions();
+        for (int i = 0; i < options.size(); i++) {
+            System.out.println((i + 1) + ". " + options.get(i));
+        }
+        System.out.println("Enter your answer (1-" + options.size() + "):");
+    }
+
+    private int getUserAnswer() {
+        Scanner scanner = new Scanner(System.in);
+        int userAnswer = scanner.nextInt();
+        return userAnswer - 1; 
+    }
+
+    private void displayResult() {
+        System.out.println("Final Score: " + score + "/" + questions.size());
+        System.out.println("Correct Answers:");
+        for (int i = 0; i < questions.size(); i++) {
+            QuizQuestion question = questions.get(i);
+            System.out.println((i + 1) + ". " + question.getOptions().get(question.getCorrectAnswerIndex()));
+        }
+    }
+
+    public static void main(String[] args) {
+        Quiz quiz = new Quiz();
+
+        quiz.addQuestion(new QuizQuestion("What is the capital of France?", Arrays.asList("Paris", "London", "Berlin", "Rome"), 0));
+        quiz.addQuestion(new QuizQuestion("What is the largest planet in our solar system?", Arrays.asList("Earth", "Saturn", "Jupiter", "Uranus"), 2));
+        quiz.addQuestion(new QuizQuestion("What is the primary source of energy for the Sun?", Arrays.asList("Chemical reactions", "Nuclear fission", "Nuclear fussion", "None of the above"), 2));
+        quiz.addQuestion(new QuizQuestion("What is the name of the outermost layer of the Sun's atmosphere?", Arrays.asList("Photosphere", "Chromosphere", "Corona", "Radiative zone"), 2));
+        quiz.addQuestion(new QuizQuestion("What is a solar flare?", Arrays.asList("A continuous stream of particles from the Sun", "A sudden, intense burst of radiation from the Sun", "A dark spot on the Sun's surface", "A large, bright feature extending outward from the Sun's surface"), 1));
+        quiz.addQuestion(new QuizQuestion("Which spacecraft was the first to provide close-up images of the Sun's corona?", Arrays.asList("Voyager 1", "Cassini", "Parker Solar Probe", "Juno"), 2));
+        quiz.addQuestion(new QuizQuestion("What is the term for the flow of charged particles from the Sun that affects the entire solar system?", Arrays.asList("Solar wind", "Solar flare", "Sunspot", "Solar eclipse"), 0));
+        quiz.addQuestion(new QuizQuestion("What is the term for the dark, cooler areas on the surface of the Sun?", Arrays.asList("Solar flares", "Sunspots", "Solar prominences", "Solar wind"), 1));
+        quiz.addQuestion(new QuizQuestion("What layer of the Sun do we typically see from Earth?", Arrays.asList("Core", "Radiative zone", "Chromosphere", "Photosphere"), 3));
+        quiz.addQuestion(new QuizQuestion("What phenomenon occurs when the Sun, Moon, and Earth align, causing the Moon to pass directly between the Sun and Earth?", Arrays.asList("Solar eclipse", "Lunar eclipse", "Solar flare", "Sunspot cycle"), 0));
+
+        quiz.startQuiz();
+    }
+}
+
+class TimerTask extends java.util.TimerTask {
+    @Override
+    public void run() {
+        System.out.println("Time's up!");
+    }
+}
+
+public class Timer {
+    private Timer timer;
+
+    public Timer(int timeLimit) {
+        timer = new java.util.Timer();
+        timer.schedule(new TimerTask(), timeLimit * 1000); 
+    }
+
+    public void cancel() {
+        timer.cancel();
+    }
+}
